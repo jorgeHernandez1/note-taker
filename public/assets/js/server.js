@@ -19,6 +19,14 @@ app.get("/", (req, res) => {
 app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "../..", "notes.html"));
 });
+// Serve js and css files
+app.get("/assets/js/index.js", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../assets/js", "index.js"));
+});
+
+app.get("/assets/css/index.js", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../assets/js", "style.css"));
+});
 
 // API Routes
 // Get all Notes
@@ -53,8 +61,8 @@ const getNotesFromFS = () => {
   return JSON.parse(fs.readFileSync("../../../db/db.json"));
 };
 
-const randNum = () =>{
-    return Math.floor((Math.random() * 9999) + 1);
+const randNum = () => {
+  return Math.floor(Math.random() * 9999 + 1);
 };
 
 // Start server
