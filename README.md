@@ -1,2 +1,2 @@
-# note-taker
-Note taking app built using JS and Express 
+# Note Taker README
+This simple app is here to  

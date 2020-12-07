@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001;;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Basic route that sends the user first to the AJAX Page
+// Serve html files
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../..", "index.html"));
 });
@@ -24,7 +24,7 @@ app.get("/assets/js/index.js", (req, res) => {
   res.sendFile(path.join(__dirname, "../../assets/js", "index.js"));
 });
 
-app.get("/assets/css/index.js", (req, res) => {
+app.get("/assets/css/style.css", (req, res) => {
   res.sendFile(path.join(__dirname, "../../assets/js", "style.css"));
 });
 
