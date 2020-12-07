@@ -21,10 +21,12 @@ app.get("/notes", (req, res) => {
 });
 // Serve js and css files
 app.get("/assets/js/index.js", (req, res) => {
+  res.type("js");
   res.sendFile(path.join(__dirname, "../../assets/js", "index.js"));
 });
 
 app.get("/assets/css/style.css", (req, res) => {
+  res.type("css");
   res.sendFile(path.join(__dirname, "../../assets/js", "style.css"));
 });
 
@@ -44,7 +46,7 @@ app.post("/api/notes", (req, res) => {
     text: req.body.text,
     id: randNum(),
   });
-  fs.writeFileSync("../../../db/db.json", JSON.stringify(notes));
+  fs.writeFileSync("./db/db.json", JSON.stringify(notes));
 
   res.json(getNotesFromFS());
 });
@@ -52,13 +54,13 @@ app.post("/api/notes", (req, res) => {
 //Delete Note
 app.delete("/api/notes/:id", (req, res) => {
   let notes = getNotesFromFS().filter((note) => note.id != req.params.id);
-  fs.writeFileSync("../../../db/db.json", JSON.stringify(notes));
+  fs.writeFileSync("./db/db.json", JSON.stringify(notes));
   res.json(getNotesFromFS());
 });
 
 //Functions
 const getNotesFromFS = () => {
-  return JSON.parse(fs.readFileSync("../../../db/db.json"));
+  return JSON.parse(fs.readFileSync("./db/db.json"));
 };
 
 const randNum = () => {
