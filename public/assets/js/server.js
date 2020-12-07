@@ -5,7 +5,7 @@ const fs = require("fs");
 
 // Sets up the Express App
 const app = express();
-const PORT = process.env.PORT || 3001;;
+const PORT = process.env.PORT || 3001;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -21,13 +21,13 @@ app.get("/notes", (req, res) => {
 });
 // Serve js and css files
 app.get("/assets/js/index.js", (req, res) => {
-  res.type("js");
+  res.setHeader("Content-Type","text/javascript");
   res.sendFile(path.join(__dirname, "../../assets/js", "index.js"));
 });
 
-app.get("/assets/css/style.css", (req, res) => {
-  res.type("css");
-  res.sendFile(path.join(__dirname, "../../assets/js", "style.css"));
+app.get("/assets/css/styles.css", (req, res) => {
+  res.setHeader("Content-Type","text/css");
+  res.sendFile(path.join(__dirname, "../../assets/css", "styles.css"));
 });
 
 // API Routes
@@ -53,7 +53,7 @@ app.post("/api/notes", (req, res) => {
 
 //Delete Note
 app.delete("/api/notes/:id", (req, res) => {
-  let notes = getNotesFromFS().filter((note) => note.id != req.params.id);
+  let notes = getNotesFromFS().filter((note) => note.id != req.params.id)
   fs.writeFileSync("./db/db.json", JSON.stringify(notes));
   res.json(getNotesFromFS());
 });
