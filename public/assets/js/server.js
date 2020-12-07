@@ -21,31 +21,41 @@ app.get("/notes", (req, res) => {
 });
 
 // API Routes
+// Get all Notes
 app.get("/api/notes", (req, res) => {
-    //read notes from fs and return all in json
-    res.json(getNotesFromFS());
+  //read notes from fs and return all in json
+  res.json(getNotesFromFS());
 });
-// API Routes
+
+// Create note
 app.post("/api/notes", (req, res) => {
-    //read notes from fs and return all in json
-    let notes = getNotesFromFS();
+  //read notes from fs and return all in json
+  let notes = getNotesFromFS();
+  notes.push({
+    title: req.body.title,
+    text: req.body.text,
+    id: randNum(),
+  });
+  fs.writeFileSync("../../../db/db.json", JSON.stringify(notes));
 
-    notes.push(
-        {
-            title: req.body.title,
-            text: req.body.text,
-            id: notes.length   
-        }
-    );
-    fs.writeFileSync("../../../db/db.json",JSON.stringify(notes));
+  res.json(getNotesFromFS());
+});
 
-    res.json(getNotesFromFS());
+//Delete Note
+app.delete("/api/notes/:id", (req, res) => {
+  let notes = getNotesFromFS().filter((note) => note.id != req.params.id);
+  fs.writeFileSync("../../../db/db.json", JSON.stringify(notes));
+  res.json(getNotesFromFS());
 });
 
 //Functions
 const getNotesFromFS = () => {
-    return JSON.parse(fs.readFileSync("../../../db/db.json"));
-}
+  return JSON.parse(fs.readFileSync("../../../db/db.json"));
+};
+
+const randNum = () =>{
+    return Math.floor((Math.random() * 9999) + 1);
+};
 
 // Start server
 app.listen(PORT, () => {
